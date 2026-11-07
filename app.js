@@ -5,18 +5,15 @@ const state = {
 };
 
 const API_BASE_URL = (() => {
-  const hostname = window.location.hostname;
   const port = window.location.port;
   const origin = window.location.origin;
 
   if (origin && origin !== 'null') {
-    if (port === '5050' || hostname === 'localhost' && port === '5050' || hostname === '127.0.0.1' && port === '5050') {
-      return origin;
-    }
-
-    if (port === '5500' || port === '8000' || port === '4173' || !port) {
+    if (port === '5500' || port === '8000' || port === '4173') {
       return 'http://localhost:5050';
     }
+
+    return origin;
   }
 
   return 'http://localhost:5050';
