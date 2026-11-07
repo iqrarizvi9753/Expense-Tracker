@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: finora-expense-tracker
+    env: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate --noinput
+    startCommand: gunicorn expense_tracker_project.wsgi --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: "localhost,127.0.0.1,finora-expense-tracker.onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://finora-expense-tracker.onrender.com,http://localhost:5050,http://127.0.0.1:5050"

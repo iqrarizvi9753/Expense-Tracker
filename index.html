@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Finora — Expense Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=20261103-1" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <section id="authView" class="auth-view active">
+        <div class="auth-card">
+          <div class="brand-panel">
+            <div class="brand-badge">F</div>
+            <h1>Finora</h1>
+            <p>Track every dollar, save smarter, and keep your goals in motion.</p>
+            <ul>
+              <li>Smart budget insights</li>
+              <li>Instant category tracking</li>
+              <li>Private personal finance dashboard</li>
+            </ul>
+          </div>
+
+          <div class="auth-panel">
+            <div class="auth-toggle">
+              <button class="auth-tab active" data-auth="signin" type="button">Sign In</button>
+              <button class="auth-tab" data-auth="signup" type="button">Sign Up</button>
+            </div>
+
+            <form id="signInForm" class="auth-form active">
+              <h2>Welcome back</h2>
+              <label>
+                <span>Email</span>
+                <input id="signinEmail" type="email" placeholder="you@example.com" required />
+              </label>
+              <label>
+                <span>Password</span>
+                <input id="signinPassword" type="password" placeholder="••••••••" required />
+              </label>
+              <button type="submit" class="primary-button">Sign In</button>
+              <p class="auth-message" id="signinMessage"></p>
+            </form>
+
+            <form id="signUpForm" class="auth-form">
+              <h2>Create account</h2>
+              <label>
+                <span>Full name</span>
+                <input id="signupName" type="text" placeholder="Alex Morgan" required />
+              </label>
+              <label>
+                <span>Email</span>
+                <input id="signupEmail" type="email" placeholder="you@example.com" required />
+              </label>
+              <label>
+                <span>Password</span>
+                <input id="signupPassword" type="password" placeholder="Create a password" required />
+              </label>
+              <button type="submit" class="primary-button">Sign Up</button>
+              <p class="auth-message" id="signupMessage"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="appView" class="app-view hidden">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Personal finance</p>
+            <h1>Finora</h1>
+          </div>
+          <div class="topbar-actions">
+            <div class="user-pill">
+              <span class="user-avatar" id="userAvatar">A</span>
+              <span id="userNameTag">User</span>
+            </div>
+            <button id="logoutBtn" class="ghost-button" type="button">Log out</button>
+          </div>
+        </header>
+
+        <main class="dashboard">
+          <aside class="sidebar-stack">
+            <section class="panel form-panel">
+              <h2>Add transaction</h2>
+              <form id="transactionForm">
+                <div class="field-grid">
+                  <label>
+                    <span>Title</span>
+                    <input id="title" name="title" type="text" placeholder="Groceries" required />
+                  </label>
+
+                  <label>
+                    <span>Amount</span>
+                    <input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required />
+                  </label>
+
+                  <label>
+                    <span>Category</span>
+                    <select id="category" name="category">
+                      <option value="Food">Food</option>
+                      <option value="Transport">Transport</option>
+                      <option value="Bills">Bills</option>
+                      <option value="Shopping">Shopping</option>
+                      <option value="Health">Health</option>
+                      <option value="Salary">Salary</option>
+                      <option value="Freelance">Freelance</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </label>
+
+                  <label>
+                    <span>Type</span>
+                    <select id="type" name="type">
+                      <option value="expense">Expense</option>
+                      <option value="income">Income</option>
+                    </select>
+                  </label>
+
+                  <label>
+                    <span>Date</span>
+                    <input id="date" name="date" type="date" required />
+                  </label>
+
+                  <label>
+                    <span>Time</span>
+                    <input id="time" name="time" type="time" required />
+                  </label>
+                </div>
+
+                <button class="primary-button" type="submit">Save transaction</button>
+              </form>
+            </section>
+
+            <section class="panel budget-panel">
+              <div class="budget-title-row">
+                <h2>Monthly budget</h2>
+                <span id="budgetStatus" class="budget-status">On track</span>
+              </div>
+              <div class="budget-amount-row">
+                <span>Spent</span>
+                <strong id="budgetSpentLabel">$0.00</strong>
+              </div>
+              <div class="progress-bar">
+                <span id="budgetProgress"></span>
+              </div>
+              <div class="budget-footer">
+                <span id="budgetText">$0.00 of $0.00</span>
+                <button id="budgetSaveBtn" class="small-button" type="button">Set budget</button>
+              </div>
+              <input id="budgetInput" type="number" min="0" step="50" placeholder="Enter monthly budget" />
+            </section>
+          </aside>
+
+          <section class="content-stack">
+            <div class="summary-grid">
+              <article class="stat-card balance-card">
+                <p>Balance</p>
+                <h3 id="balanceValue">$0.00</h3>
+              </article>
+              <article class="stat-card income-card">
+                <p>Income</p>
+                <h3 id="incomeValue">$0.00</h3>
+              </article>
+              <article class="stat-card expense-card">
+                <p>Expenses</p>
+                <h3 id="expenseValue">$0.00</h3>
+              </article>
+            </div>
+
+            <div class="feature-row">
+              <article class="feature-card">
+                <span class="feature-tag">Unique</span>
+                <h3>Smart cash flow view</h3>
+                <p>One glance reveals your balance, spending rhythm, and the categories driving your budget.</p>
+              </article>
+              <article class="feature-card">
+                <span class="feature-tag">Live</span>
+                <h3>Time-aware tracking</h3>
+                <p>Record exact expense time, date, and amount to spot habits and reduce waste faster.</p>
+              </article>
+              <article class="feature-card">
+                <span class="feature-tag">Savings</span>
+                <h3>Actionable saving ideas</h3>
+                <p>Turn spending data into practical saving moves with guided ideas for each spending habit.</p>
+              </article>
+            </div>
+
+            <div class="insights-grid">
+              <section class="panel insight-panel">
+                <div class="panel-header">
+                  <h2>Category breakdown</h2>
+                </div>
+                <ul id="categoryBreakdown" class="category-list"></ul>
+              </section>
+
+              <section class="panel insight-panel">
+                <div class="panel-header">
+                  <h2>Smart insights</h2>
+                </div>
+                <ul id="insightList" class="insight-list"></ul>
+              </section>
+            </div>
+
+            <section class="panel saving-panel">
+              <div class="panel-header">
+                <h2>Saving ways</h2>
+                <span class="saving-badge">Click each plan</span>
+              </div>
+              <div id="savingWays" class="saving-accordion"></div>
+            </section>
+
+            <section class="panel list-panel">
+              <div class="list-header">
+                <h2>Transactions</h2>
+                <div class="list-controls">
+                  <input id="searchInput" type="search" placeholder="Search title" aria-label="Search transactions" />
+                  <label for="typeFilter" class="visually-hidden">Filter by type</label>
+                  <select id="typeFilter" aria-label="Filter transactions by type">
+                    <option value="all">All</option>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Type</th>
+                      <th>Amount</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transactionList"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+        </main>
+      </section>
+    </div>
+
+    <script src="app.js?v=20261103-1"></script>
+  </body>
+</html>
